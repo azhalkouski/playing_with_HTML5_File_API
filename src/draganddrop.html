@@ -1,0 +1,63 @@
+﻿<!-- DONE -->
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+    body 
+    {
+        font-size:18pt;
+    }
+    #filedrop 
+    {
+        width: 300px;
+        height: 200px;
+        color: Gray;
+        border: 10px dashed #9a9a9a;
+    }
+</style>
+<title>Using Drag and Drop</title>
+</head>
+<body>
+    <h1>Using Drag and Drop</h1>
+    <p>Drop files here: </p>
+    <div id="filedrop"></div>
+    <p>File Information: </p>
+    <div id="filedata"></div>
+
+    <script type="text/javascript">
+        function init() {
+            const bHaveFileAPI = (window.File && window.FileReader);
+    
+            if (!bHaveFileAPI) {
+                alert("This browser doesn't support the File API");
+                return;
+            }
+    
+            document.getElementById("filedrop").addEventListener("drop", onFilesDropped);
+            document.getElementById("filedrop").addEventListener("dragover", onDragOver);
+        }
+    
+        function onDragOver(e) {
+            e.stopPropagation();
+            e.preventDefault();
+        }
+    
+        function onFilesDropped(e) {
+            e.stopPropagation();
+            e.preventDefault();
+    
+            const files = e.dataTransfer.files;
+    
+            document.getElementById('filedata').innerHTML = "";
+
+            Array.of(...files).forEach((file, index) => {
+                const fileInfo = `<p>File name: ${files[index].name}; size: ${files[index].size}; type: ${files[index].type}</p>`;
+                document.getElementById('filedata').innerHTML += fileInfo;
+            });
+    
+        }
+    
+        window.addEventListener("load", init);
+    </script>
+</body>
+</html>

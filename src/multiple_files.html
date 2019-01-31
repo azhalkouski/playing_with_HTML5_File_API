@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+    body 
+    {
+        font-size:18pt;
+    }
+</style>
+<title>Working With Multiple Files</title>
+</head>
+<body>
+    <h1>Handling Multiple Files</h1>
+    <form action="">
+        <label>Select a file: </label>
+        <input type="file" name="files" id="fileElem" multiple />
+    </form>
+    <div id="filedata"></div>
+
+    <script type="text/javascript">
+        function init() {
+            const bHaveFileAPI = (window.File && window.FileReader);
+    
+            if (!bHaveFileAPI) {
+                alert("This browser doesn't support the File API");
+                return;
+            }
+    
+            document.getElementById("fileElem").addEventListener("change", onFileChanged);
+        }
+    
+        function onFileChanged(e) {
+            const files = e.target.files;
+            let totalBytes = 0;
+    
+            Array.of(...files).forEach((file, index) => {
+                const fileInfo = `<p>File name: ${files[index].name}; size: ${files[index].size}; type: ${files[index].type}; </p>`;
+                totalBytes += files[index].size;
+                document.getElementById('filedata').innerHTML += fileInfo;
+            });
+    
+            document.getElementById('filedata').innerHTML += `<p>Total of ${files.length} files, ${totalBytes} bytes.`;
+        }
+    
+        window.addEventListener("load", init);
+    </script>
+</body>
+</html>

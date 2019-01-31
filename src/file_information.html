@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+    body 
+    {
+        font-size:18pt;
+    }
+</style>
+<title>Getting File Information</title>
+</head>
+<body>
+    <h1>Getting File Information</h1>
+    <form action="">
+        <label>Select a file: </label>
+        <input type="file" name="files" id="fileElem" />
+    </form>
+
+    <p>File Name: <span id="filename"></span></p>
+    <p>File Size: <span id="filesize"></span></p>
+    <p>File Type: <span id="filetype"></span></p>
+
+    <script type="text/javascript">
+        function init() {
+            // check to see if this browser supports the File APIs we need
+            const bHaveFileAPI = (window.File && window.FileReader);
+
+            if (!bHaveFileAPI) {
+                alert("This browser doesn't support the File API");
+                return;
+            }
+
+            // if the browser supports the necessary features, enable the UI
+            document.getElementById("fileElem").addEventListener("change", onFileChanged);
+        }
+
+        // when the user selects a file, this function will be called
+        function onFileChanged(e) {
+            // get the file from the event information
+            const thefile = e.target.files[0];
+
+            // display the file data 
+            document.getElementById("filename").innerHTML = thefile.name;
+            document.getElementById("filesize").innerHTML = thefile.size;
+            document.getElementById("filetype").innerHTML = thefile.type;
+
+            document.getElementById('filedata').innerHTML += fileInfo;
+        }
+
+        window.addEventListener("load", init);
+    </script>
+</body>
+</html>
